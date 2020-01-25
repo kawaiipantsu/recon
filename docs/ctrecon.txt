@@ -1,0 +1,104 @@
+                         ____   ____ _____ ____  _____ ____ ___  _   _
+   KawaiiPantsu         / / /  / ___|_   _|  _ \| ____/ ___/ _ \| \ | |
+   (c) 2020            / / /  | |     | | | |_) |  _|| |  | | | |  \| |
+   _  _               / / /   | |___  | | |  _ <| |__| |__| |_| | |\  |
+ _| || |_ _____      /_/_/     \____| |_| |_| \_\_____\____\___/|_| \_|
+|_  ..  _|_____|_____ _____ _____ _____ _____ _____ _____ _____ _____ _____
+|_      _|_____|_____|_____|_____|_____|_____|_____|_____|_____|_____|_____|
+  |_||_|
+
+QUICK INFORMATION
+======================
+
+CTRECON - Certificate Transparency Reconnaissance
+
+Lookup a domain via the Certificate Transparency open framework for monitoring 
+and auditing SSL certificates in nearly real time and find out associated 
+subdomains etc.
+
+Nice way to do fast reconnaissance on a domain and get results like the old
+days with AXFR (: This is not using any brute force or dict attact vectors.
+It's simply looking up the domain's identity and looking for other domains that
+has the same identity in the name. Thus doing a AXFR on the top level domain
+name. You can also use it to lookup detailed information on all the certificates
+they have had on a singular subdomain/domain.
+
+References:
+ - http://www.certificate-transparency.org/
+ - https://crt.sh
+
+
+
+
+CTRECON USAGE
+======================
+
+Just run the problem to get the help screen. Hopefully you have done the
+installation from the frontpage so that all of these scripts are included
+in your system path.
+
+./ctrecon -d linux.org
+     ____   ____ _____ ____  _____ ____ ___  _   _
+    / / /  / ___|_   _|  _ \| ____/ ___/ _ \| \ | | KawaiiPantsu
+   / / /   | |    | | | |_) |  _|| |  | | | |  \| | (c) 2020
+  / / /    | |__  | | |  _ <| |__| |__| |_| | |\  |
+ /_/_/     \____| |_| |_| \_\_____\____\___/|_| \_|
+
+ {           Certificate Transparency Reconnaissance           }
+ {    Crawling the Certificate Transparency Open-framkework    }
+
+-// Far out, i found 9 domain(s) o.O
+-// Here is the list on all sub domains with a bit of extra info
+
+% [       *.linux.org ] CA Issuer: COMODO ECC Domain Validation Secure Server CA 2, Last seen: 15-06-2017
+% [  cpanel.linux.org ] CA Issuer: Let's Encrypt Authority X3, Last seen: 07-12-2018
+% [         linux.org ] CA Issuer: "cPanel, Inc. Certification Authority", Last seen: 19-03-2017
+% [    mail.linux.org ] CA Issuer: "cPanel, Inc. Certification Authority", Last seen: 19-03-2017
+% [   sendy.linux.org ] CA Issuer: Let's Encrypt Authority X3, Last seen: 04-04-2019
+% [   track.linux.org ] CA Issuer: "cPanel, Inc. Certification Authority", Last seen: 03-02-2018
+% [ webdisk.linux.org ] CA Issuer: Let's Encrypt Authority X3, Last seen: 07-12-2018
+% [ webmail.linux.org ] CA Issuer: Let's Encrypt Authority X3, Last seen: 07-12-2018
+% [     www.linux.org ] CA Issuer: "cPanel, Inc. Certification Authority", Last seen: 19-03-2017
+
+Warning you might sometimes get a error like the following:
+
+ -// Something went wrong ....
+ -// HTTP/502
+
+This just means you have been throttled, try again :)
+
+
+
+
+TECHNICAL STUFF
+======================
+
+If you want to scrape this information yourself, perhaps rebuild the data in
+your own database or what have you. Then you should take a look at some of this
+stuff here. You can also find info on participating/using the framework your-
+self on your web server.
+
+To include SCT in the handshake your web server must support the following
+ - X509v3 Extension
+ - TLS Extension
+ - OCSP Stapling
+
+To use it with Apache:
+ - mod_ssl_ct
+ - https://httpd.apache.org/docs/trunk/mod/mod_ssl_ct.html
+ - http://www.certificate-transparency.org/resources-for-site-owners/apache
+
+All known lists - https://www.gstatic.com/ct/log_list/v2/all_logs_list.json
+
+
+
+
+THE IDEA, SOURCE?
+======================
+
+So this has been known for ages ... but the scripts out there just don't suit
+my needs, sorry :() So i had to create my own little quick and dirty version
+of ctfr that i previously used!
+
+Original CTFR by UnaPibaGeek
+ - https://github.com/UnaPibaGeek/ctfr

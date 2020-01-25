@@ -1,10 +1,14 @@
 #!/usr/bin/env php
 <?PHP
 /*************************************************************
- * CTOSINT - Certificate Transparency Opensource Intelligence
+ * CTRECON - Certificate Transparency Reconnaissance
  *
- * Lookup a domain via Certificate transparency and find out
- * subdomains etc. Nice way to do fast recon on a domain.
+ * Lookup a domain via the Certificate Transparency open 
+ * framework for monitoring and auditing SSL certificates in
+ * nearly real time and find out associated subdomains etc.
+ * 
+ * Nice way to do fast recon on a domain and get results like
+ * the old days with AXFR (:
  *
  * References:
  * - http://www.certificate-transparency.org/
@@ -14,6 +18,9 @@
  * there just don't suit my needs, sorry :() So i had to
  * create my own little quick and dirty version of ctfr!
  * 
+ * Original CTFR by UnaPibaGeek
+ * - https://github.com/UnaPibaGeek/ctfr
+ * 
  *************************************************************/
 // Not CLI ? Let's poo out!
 if (PHP_SAPI != "cli") exit();
@@ -22,14 +29,15 @@ if (PHP_SAPI != "cli") exit();
 $site = "https://crt.sh/?output=json&q="; // Just throw in the domain name at the end ...
 
 // Let's always show off the not so gay figlet text!
-echo "     ____   ____ _____ ___  ____ ___ _   _ _____  "."\n";
-echo "    / / /  / ___|_   _/ _ \/ ___|_ _| \ | |_   _| KawaiiPantsu"."\n";
-echo "   / / /  | |     | || | | \___ \| ||  \| | | |   (c) 2020"."\n";
-echo "  / / /   | |___  | || |_| |___) | || |\  | | |   "."\n";
-echo " /_/_/     \____| |_| \___/|____/___|_| \_| |_|   "."\n";
+echo "     ____   ____ _____ ____  _____ ____ ___  _   _  "."\n";
+echo "    / / /  / ___|_   _|  _ \| ____/ ___/ _ \| \ | | KawaiiPantsu"."\n";
+echo "   / / /   | |    | | | |_) |  _|| |  | | | |  \| | (c) 2020"."\n";
+echo "  / / /    | |__  | | |  _ <| |__| |__| |_| | |\  | "."\n";
+echo " /_/_/     \____| |_| |_| \_\_____\____\___/|_| \_| "."\n";
 echo " "."\n";
-echo " { Certificate Transparency Open-source Intelligence           }"."\n";
-echo " { A simple way to do sub-domain recon, thanks to Google!      }"."\n";
+echo " {           Certificate Transparency Reconnaissance           }"."\n";
+echo " {    Crawling the Certificate Transparency Open-framkework    }"."\n";
+
 
 // Let's utilize the getopt thinggy!
 $shortopts = "d:o:h";
@@ -105,14 +113,23 @@ if ( $res["httpcode"] == 200 ) {
    $issuer = @trim($issuer[1]);
 
    $dd = trim($domain["name_value"]);
-   $dd = trim(str_replace("\n",", ",$dd));
-
-   $domains[$dd] = array(
-    "seen"      => trim($domain["entry_timestamp"]),
-    "issuer"    => trim($issuer),
-   );
    
-   if ( strlen($dd) > $llen ) $llen = strlen($dd);
+   if ( preg_match("/\n/i",$dd) ) {
+      $dd = explode("\n",$dd);
+      foreach($dd as $_d) {
+        $domains[$_d] = array(
+          "seen"      => trim($domain["entry_timestamp"]),
+          "issuer"    => trim($issuer),
+        );
+        if ( strlen($_d) > $llen ) $llen = strlen($_d);
+      }
+   } else {
+      $domains[$dd] = array(
+        "seen"      => trim($domain["entry_timestamp"]),
+        "issuer"    => trim($issuer),
+      );
+      if ( strlen($dd) > $llen ) $llen = strlen($dd);
+   }
 
   }
 
