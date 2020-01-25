@@ -1,0 +1,194 @@
+#!/usr/bin/env php
+<?PHP
+/*************************************************************
+ * CTOSINT - Certificate Transparency Opensource Intelligence
+ *
+ * Lookup a domain via Certificate transparency and find out
+ * subdomains etc. Nice way to do fast recon on a domain.
+ *
+ * References:
+ * - http://www.certificate-transparency.org/
+ * - https://crt.sh
+ *
+ * So this has been known for ages ... but the scripts out
+ * there just don't suit my needs, sorry :() So i had to
+ * create my own little quick and dirty version of ctfr!
+ * 
+ *************************************************************/
+// Not CLI ? Let's poo out!
+if (PHP_SAPI != "cli") exit();
+
+// Where i get the data from ?
+$site = "https://crt.sh/?output=json&q="; // Just throw in the domain name at the end ...
+
+// Let's always show off the not so gay figlet text!
+echo "     ____   ____ _____ ___  ____ ___ _   _ _____  "."\n";
+echo "    / / /  / ___|_   _/ _ \/ ___|_ _| \ | |_   _| KawaiiPantsu"."\n";
+echo "   / / /  | |     | || | | \___ \| ||  \| | | |   (c) 2020"."\n";
+echo "  / / /   | |___  | || |_| |___) | || |\  | | |   "."\n";
+echo " /_/_/     \____| |_| \___/|____/___|_| \_| |_|   "."\n";
+echo " "."\n";
+echo " { Certificate Transparency Open-source Intelligence           }"."\n";
+echo " { A simple way to do sub-domain recon, thanks to Google!      }"."\n";
+
+// Let's utilize the getopt thinggy!
+$shortopts = "d:o:h";
+$longopts  = array("domain:","output:","help");
+$options = getopt($shortopts, $longopts);
+
+// Default values
+$dom = false;
+$out = false;
+
+foreach ( $options as $option => $value ) {
+ switch ( $option ) {
+  case "d":
+   $dom = trim($value);
+   break;
+  case "domain":
+   $dom = trim($value);
+   break;
+
+  case "o":
+   $out = trim($value);
+   break;
+  case "output":
+   $out = trim($value);
+   break;
+
+  case "h":
+   help();
+   break;
+  case "help":
+   help();
+   break;
+ }
+}
+
+// Sanity check
+if ($dom === false) help();   // Forgot domain
+if (strlen($dom) < 2) help(); // This is not likely ?
+
+if ( $out ) {
+ $overwrte = false;
+ if ( ! is_writable(dirname($out)) ) {
+   echo "\n";
+   echo "-// No way... i can't write to '$out'\n";
+   echo "\n";
+   exit();
+ }
+ if ( is_writable($out) ) {
+  echo "\n";
+  echo "-// Eehh, that file is already there?\n";
+  echo "-// Want to overwrite '$out' [y/N]: ";
+  $line = trim(readline());
+  if ($line == "y") $overwrite=true;
+  else {
+   echo "-// Fine, disabled output .. So we don't overwrite anything by mistake!\n";
+   $out = false;
+  }
+ }
+}
+
+// -- All the whoop magic looking up a domain --
+
+$res = crtshlookup($dom);
+if ( $res["httpcode"] == 200 ) {
+ $tmp_domains = json_decode($res["response"],true);
+ $domains = array();
+ if ( count($tmp_domains) > 0) {
+
+  $llen = 0;
+  foreach ($tmp_domains as $domain) {
+
+   $issuer = explode("CN=",$domain["issuer_name"]);
+   $issuer = @trim($issuer[1]);
+
+   $dd = trim($domain["name_value"]);
+   $dd = trim(str_replace("\n",", ",$dd));
+
+   $domains[$dd] = array(
+    "seen"      => trim($domain["entry_timestamp"]),
+    "issuer"    => trim($issuer),
+   );
+   
+   if ( strlen($dd) > $llen ) $llen = strlen($dd);
+
+  }
+
+  echo "\n";
+  echo "-// Far out, i found ".count($domains)." domain(s) o.O\n";
+  echo "-// Here is the list on all sub domains with a bit of extra info\n";
+  echo "\n";
+
+  if ( $out ) $outfp = fopen($out, "w");
+
+  // Let's sort it, am i pretty yet ?
+  ksort($domains);
+
+  foreach ( $domains as $d => $info) {
+   printf("%% [ %".$llen."s ] CA Issuer: %s, Last seen: %s\n",trim($d), trim($info["issuer"]), date("d-m-Y",strtotime(trim($info["seen"]))));
+   if ( $out ) fwrite($outfp, trim(str_replace(", ","\n",$d))."\n");
+  }
+
+  if ( $out ) {
+   fclose($outfp);
+   echo "\n";
+   echo "Wrote all the domains to: $out\n";
+  }
+
+
+ } else {
+  echo "-// Sorry, i could not help you do any recon on $dom\n";
+  echo "-//  Was not able to snoop up anything at all ....\n\n";
+ }
+} else {
+ echo "\n";
+ if (@isset($res["error_msg"]) ) echo "-// Something went wrong ....\n-// HTTP/".$res["httpcode"]." ( ".$res["error_msg"]." )";
+ else                            echo "-// Something went wrong ....\n-// HTTP/".$res["httpcode"]."";
+ echo "\n";
+}
+// ---------------------------------------------
+echo "\n";
+exit(); // Exit the script :) We done bro!
+
+
+
+// Functions
+
+function help() {
+ printf("\n");
+ printf("Usage:\n");
+ printf("\n");
+ printf(" -d, --domain=   :: Domain to search for subdomains\n");
+ printf(" -o, --output=   :: Save to output file\n");
+ printf(" -h, --help      :: Show this help ...\n");
+ printf("\n");
+ printf("\n");
+ exit();
+}
+
+function crtshlookup($dom=false) {
+ global $site;
+ if ($dom === false) return false;
+ $url = $site.$dom;
+
+ $ch = curl_init($url);
+ curl_setopt($ch, CURLOPT_RETURNTRANSFER,  true);
+ curl_setopt($ch, CURLOPT_AUTOREFERER, true);
+ curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML like Gecko) Chrome/36.0.1985.143 Safari/537.36");
+ curl_setopt($ch, CURLOPT_ENCODING, "gzip,deflate");
+ curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+ curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+ curl_setopt($ch, CURLOPT_FOLLOWLOCATION,  true);
+ $result = array();
+ $result["response"] = curl_exec($ch);
+ $result["httpcode"] = trim(curl_getinfo($ch, CURLINFO_HTTP_CODE));
+ if ( curl_error($ch) ) {
+  $result["error_msg"] = trim(curl_error($ch));
+ }
+ curl_close($ch);
+ return $result;
+}
+
+?>
