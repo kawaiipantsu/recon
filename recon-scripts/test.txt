@@ -1,9 +1,0 @@
-*.linux.org
-cpanel.linux.org
-linux.org
-mail.linux.org
-sendy.linux.org
-track.linux.org
-webdisk.linux.org
-webmail.linux.org
-www.linux.org
