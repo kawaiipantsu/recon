@@ -21,6 +21,8 @@
  * Original CTFR by UnaPibaGeek
  * - https://github.com/UnaPibaGeek/ctfr
  * 
+ * 
+ * Read about this script in: docs/ctrecon.txt
  *************************************************************/
 // Not CLI ? Let's poo out!
 if (PHP_SAPI != "cli") exit();
@@ -180,6 +182,8 @@ function help() {
  printf(" -d, --domain=   :: Domain to search for subdomains\n");
  printf(" -o, --output=   :: Save to output file\n");
  printf(" -h, --help      :: Show this help ...\n");
+ printf("\n");
+ printf("Read about this script in: docs/ctrecon.txt\n");
  printf("\n");
  printf("\n");
  exit();
