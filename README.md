@@ -52,5 +52,11 @@ Under.............: Advanced system settings->Environment Variables
 
 # Recon scripts
 Just a quick list of the current recon scripts and a direct link to the text file.
+- [recon-update](docs/recon-update.txt) - Update the recon scripts from GIT
 - [ctrecon](docs/ctrecon.txt) - Do recon on domain names, almost like AXFR
+
+
+
+
+
 

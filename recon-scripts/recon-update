@@ -1,0 +1,38 @@
+#!/bin/bash
+################################################################################
+##                         ____  ____  _____ ____ ___  _   _  
+##     KawaiiPantsu       / / / |  _ \| ____/ ___/ _ \| \ | |  UPDATE THE RECON
+##     (c) 2020          / / /  | |_) |  _|| |  | | | |  \| |  SCRIPTS VIA GIT
+##     _  _             / / /   |  _ <| |__| |__| |_| | |\  | 
+##   _| || |_ _____    /_/_/    |_| \_\_____\____\___/|_| \_| 
+##  |_  ..  _|_____|_____ _____ _____ _____ _____ _____ _____ _____ _____ _____
+##  |_      _|_____|_____|_____|_____|_____|_____|_____|_____|_____|_____|_____|
+##    |_||_|
+##
+### Get usefull stuff, i believe!
+SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
+UPDATE_CMD="git pull --quiet $SCRIPTPATH/../"
+
+
+### Fancy things
+echo "    ____  ____  _____ ____ ___  _   _   _   _           _       _        "
+echo "   / / / |  _ \| ____/ ___/ _ \| \ | | | | | |_ __   __| | __ _| |_ ___  "
+echo "  / / /  | |_) |  _|| |  | | | |  \| | | | | | '_ \ / _\` |/ _\` | __/ _ \ "
+echo " / / /   |  _ <| |__| |__| |_| | |\  | | |_| | |_) | (_| | (_| | ||  __/ "
+echo "/_/_/    |_| \_\_____\____\___/|_| \_|  \___/| .__/ \__,_|\__,_|\__\___| "
+echo "                                             |_|                         "
+echo "-------------------------------------------------------------------------"
+echo ""
+
+### Update the recon project
+if git checkout master --quiet && git fetch origin master --quiet && [ `git rev-list HEAD...origin/master --count` != 0 ] && git merge origin/master --quiet
+then
+    echo "Found newer version of the KawaiiPantsu - Rec0n project"
+    echo -n "Updating recon procect, please wait ...: "
+    $UPDATE_CMD
+    echo "Done"
+else
+    echo "We all updatede baby! - Rock on!"
+fi
+
+echo ""
