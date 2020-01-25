@@ -4,9 +4,22 @@
 
 ![Rec0n](docs/images/rec0n-logo.png)
 
-> recon - /rɪˈkɒn/ (INFORMAL•NORTH AMERICAN)
-> noun: recon; plural noun: recons
-> short for reconnaissance.
-> verb
-> verb: recon; 3rd person present: recons; past tense: reconned; past participle: reconned; gerund > or present participle: reconning
-> short for reconnoitre.
+---
+
+> **recon** - */rɪˈkɒn/* (INFORMAL•NORTH AMERICAN)
+>
+> **noun**
+>> *noun: recon; plural noun: recons*
+>> 
+>> *short for **[reconnaissance](https://dictionary.cambridge.org/dictionary/english/reconnaissance)**.*
+>
+> **verb**
+>> *verb: recon; 3rd person present: recons; past tense: reconned; past participle: reconned; gerund > or present participle: reconning*
+>> 
+>> *short for **[reconnoitre]()**.*
+>
+> .
+# Recon scripts
+Just a quick list of the current recon scripts and a direct link to the text file.
+- [ctrecon](docs/ctrecon.txt) - Do recon on domain names, almost like AXFR
+
