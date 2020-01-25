@@ -183,7 +183,8 @@ function help() {
  printf(" -o, --output=   :: Save to output file\n");
  printf(" -h, --help      :: Show this help ...\n");
  printf("\n");
- printf("Read about this script in: docs/ctrecon.txt\n");
+ printf("Read about this script in:\n");
+ printf("\n".str_replace("/recon-scripts","",__DIR__)."/docs/ctrecon.txt\n");
  printf("\n");
  printf("\n");
  exit();

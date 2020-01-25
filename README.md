@@ -19,6 +19,37 @@
 >> *short for **[reconnoitre]()**.*
 >
 > .
+# Installation
+
+Most of these scripts use *PHP*, *Python* or *Precompiled C*. So here is the quickest way to
+install these recon scripts. I will update this section if you need anymore
+dependencies...
+
+```
+apt-get install php-cli php-curl
+apt-get install python
+```
+Get recon git project & set it up!
+```
+cd
+git clone https://github.com/kawaiipantsu/recon.git
+export PATH="$PATH:~/recon/recon-scripts"
+```
+If you want to always add it to your PATH
+```
+# LINUX
+Add the following.: export PATH="$PATH:~/recon/recon-scripts"
+To the bottom of..: ~/.bashrc
+
+# MacOS
+Add the following.: export PATH="$PATH:~/recon/recon-scripts"
+To the bottom of..: ~/.bash_profile
+
+# Windowns + Gitbash etc
+Add the following.: C:\path\to\recon\recon-scripts
+Under.............: Advanced system settings->Environment Variables
+``` 
+
 # Recon scripts
 Just a quick list of the current recon scripts and a direct link to the text file.
 - [ctrecon](docs/ctrecon.txt) - Do recon on domain names, almost like AXFR
