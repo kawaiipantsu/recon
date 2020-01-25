@@ -50,15 +50,15 @@ in your system path.
 -// Far out, i found 9 domain(s) o.O
 -// Here is the list on all sub domains with a bit of extra info
 
-% [       *.linux.org ] CA Issuer: COMODO ECC Domain Validation Secure Server CA 2, Last seen: 15-06-2017
-% [  cpanel.linux.org ] CA Issuer: Let's Encrypt Authority X3, Last seen: 07-12-2018
-% [         linux.org ] CA Issuer: "cPanel, Inc. Certification Authority", Last seen: 19-03-2017
-% [    mail.linux.org ] CA Issuer: "cPanel, Inc. Certification Authority", Last seen: 19-03-2017
-% [   sendy.linux.org ] CA Issuer: Let's Encrypt Authority X3, Last seen: 04-04-2019
-% [   track.linux.org ] CA Issuer: "cPanel, Inc. Certification Authority", Last seen: 03-02-2018
-% [ webdisk.linux.org ] CA Issuer: Let's Encrypt Authority X3, Last seen: 07-12-2018
-% [ webmail.linux.org ] CA Issuer: Let's Encrypt Authority X3, Last seen: 07-12-2018
-% [     www.linux.org ] CA Issuer: "cPanel, Inc. Certification Authority", Last seen: 19-03-2017
+% [       *.linux.org ] IP:                 | Seen: 15-06-2017 | CA: COMODO ECC Domain Validation Secure Server CA 2
+% [  cpanel.linux.org ] IP:                 | Seen: 07-12-2018 | CA: Let's Encrypt Authority X3
+% [         linux.org ] IP:  104.27.167.219 | Seen: 19-03-2017 | CA: "cPanel, Inc. Certification Authority"
+% [    mail.linux.org ] IP:                 | Seen: 19-03-2017 | CA: "cPanel, Inc. Certification Authority"
+% [   sendy.linux.org ] IP:                 | Seen: 04-04-2019 | CA: Let's Encrypt Authority X3
+% [   track.linux.org ] IP:                 | Seen: 03-02-2018 | CA: "cPanel, Inc. Certification Authority"
+% [ webdisk.linux.org ] IP:                 | Seen: 07-12-2018 | CA: Let's Encrypt Authority X3
+% [ webmail.linux.org ] IP:                 | Seen: 07-12-2018 | CA: Let's Encrypt Authority X3
+% [     www.linux.org ] IP:  104.27.166.219 | Seen: 19-03-2017 | CA: "cPanel, Inc. Certification Authority"
 
 Warning you might sometimes get a error like the following:
 

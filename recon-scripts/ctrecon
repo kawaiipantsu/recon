@@ -146,8 +146,11 @@ if ( $res["httpcode"] == 200 ) {
   ksort($domains);
 
   foreach ( $domains as $d => $info) {
-   printf("%% [ %".$llen."s ] CA Issuer: %s, Last seen: %s\n",trim($d), trim($info["issuer"]), date("d-m-Y",strtotime(trim($info["seen"]))));
-   if ( $out ) fwrite($outfp, trim(str_replace(", ","\n",$d))."\n");
+    $ip = gethostbyname($d);
+    if ($ip == $d) $ip = "";
+
+    printf("%% [ %".$llen."s ] IP: %15s | Seen: %s | CA: %s\n",trim($d), $ip, date("d-m-Y",strtotime(trim($info["seen"]))), trim($info["issuer"]));
+    unset($ip);
   }
 
   if ( $out ) {
