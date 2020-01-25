@@ -158,6 +158,7 @@ if ( $res["httpcode"] == 200 ) {
 
 
  } else {
+  echo "\n";
   echo "-// Sorry, i could not help you do any recon on $dom\n";
   echo "-//  Was not able to snoop up anything at all ....\n\n";
  }
