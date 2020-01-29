@@ -1,0 +1,106 @@
+                         ____   ____  _____ ____ ___  _   _
+   KawaiiPantsu         / / /  |  _ \| ____/ ___/ _ \| \ | |  NumberToOperator
+   (c) 2020            / / /   | |_) |  _|| |  | | | |  \| |  recon-ntoo
+   _  _               / / /    |  _ <| |__| |__| |_| | |\  |  docs
+ _| || |_ _____      /_/_/     |_| \_\_____\____\___/|_| \_|
+|_  ..  _|_____|_____ _____ _____ _____ _____ _____ _____ _____ _____ _____
+|_      _|_____|_____|_____|_____|_____|_____|_____|_____|_____|_____|_____|
+  |_||_|
+
+EXPLANATION
+======================
+
+Sometimes it's nice to know "who" owns a phone number right now, i'm not
+talking about the person using it but the telco operator who controls it.
+
+Good for when you want to social engineer the company etc. What ever small bit
+of intel that can make you sound more confident is gold!
+
+Pre-numberporting you could in most cases just look up the number ranges and
+see clearly who owned a number. But today, you can move your number between
+any telco operator. So it's no longer easy to find out where it currently is.
+
+But hey, i noticed that a lot of telco providers did some prelim checks when
+you wanted to move your number and that they often refered back in their data
+as to what id or cps number it belonged to. I soon found out we here in Denmark
+have a place that manages all these number so they don't get mixed up.
+
+The company is called OCH A/S and is a managed by multiple Telco companies.
+They are as following: TDC, Telenor, Telia og 3
+They have what they refere to as the "phone number operator database".
+
+This is of course not something public and i can't connect directly to it unless
+i'm a service or network operator and i have a contract. How ever OSINT let me
+to find both leaked data, old data, but also Telco's dropdown's where they
+refered to the id in value. So scraped it all and combined it into one good list
+
+The list should be good for years, granted that when ever a new "telco" provider
+pop up here in Denmark we will be missing it.
+
+The cool thing about this is that it's not only mobile phone numbers but also
+fastnet and common and voip numbers. All have a telco provider.
+
+Quick reference info
+======================
+
+Operator Name           = The telco provider
+
+Network Operator Type
+ - Network Operator     = Have their own network established (over,under ground etc)
+ - Service Operator     = Leases their way onto a Network operator's network.
+
+OCH CPS                 = The ID that OCH A/S has givien them in their database
+Operator ID             = Often it's just the CPS with a "0" removed from the start
+
+CPS format
+ - 00xxx                = Service Operator with direct connection to OCH backend
+ - 08xxx                = Service Operator with no connection to OCH backend
+ - 010xx                = Network Operator (they have always direct connection to OCH)
+
+ICC Length              = What length(s) of the SIM card number (ICC) is expected
+
+ICC Prefix              = If they have a prefixed ICC number
+
+
+
+USAGE
+======================
+
+./recon-ntoo -n 60101066
+     ____  _   _ _____ ___   ___  ____  _____ ____ ___  _   _
+    / / / | \ | |_   _/ _ \ / _ \|  _ \| ____/ ___/ _ \| \ | | KawaiiPantsu
+   / / /  |  \| | | || | | | | | | |_) |  _|| |  | | | |  \| | (c) 2020
+  / / /   | |\  | | || |_| | |_| |  _ <| |__| |__| |_| | |\  |
+ /_/_/    |_| \_| |_| \___/ \___/|_| \_\_____\____\___/|_| \_|
+
+ {         (Phone) Number To Operator Reconnaissance         }
+ {    Taking advandtage of OCH's data and Telco's API's      }
+
+-// Looks like it all went okay! Here is what i found ...
+
+-// Number ..........: 60101066
+-// Number type .....: mobile
+-//
+-// Operator Name ...: Telia
+-// Operator Type ...: Network Operator
+-//
+-// Operator aliases : None
+-//
+-// Operator ID .....: 1010
+-// OCH CPS Number ..: 01010
+-// OCH Direct Conn .: Yes
+-//
+-// SIM Card ........: Yes
+-// SIM ICC Length ..: 16,19,20
+-// SIM ICC Prefix ..:
+
+
+
+
+Information references
+======================
+
+OCH A/S
+- http://och.dk
+- http://och.dk/da/kom-godt-i-gang/teknikken.aspx
+- 
