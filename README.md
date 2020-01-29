@@ -49,7 +49,7 @@ Under.............: Advanced system settings->Environment Variables
 Just a quick list of the current recon scripts and a direct link to the text file.
 - [recon-update](docs/recon-update.txt) - Update the recon scripts from GIT
 - [recon-ct](docs/recon-ct.txt) - Do recon on domain names, almost like AXFR
-- [recon-ntoo](docs/recon-ntoo.txt) - Comming! Lookup danish phone number and get Operator
+- [recon-ntoo](docs/recon-ntoo.txt) - Lookup danish phone number and find operator
 
 
 
