@@ -188,7 +188,7 @@ function help() {
  printf(" -h, --help      :: Show this help ...\n");
  printf("\n");
  printf("Read about this script in:\n");
- printf("\n".str_replace("/recon-scripts","",__DIR__)."/docs/ctrecon.txt\n");
+ printf("\n".str_replace("/recon-scripts","",__DIR__)."/docs/recon-ct.txt\n");
  printf("\n");
  printf("\n");
  exit();

@@ -13,11 +13,6 @@
 >> 
 >> *short for **[reconnaissance](https://dictionary.cambridge.org/dictionary/english/reconnaissance)**.*
 >
-> **verb**
->> *verb: recon; 3rd person present: recons; past tense: reconned; past participle: reconned; gerund > or present participle: reconning*
->> 
->> *short for **[reconnoitre]()**.*
->
 > .
 # Installation
 
@@ -53,7 +48,8 @@ Under.............: Advanced system settings->Environment Variables
 # Recon scripts
 Just a quick list of the current recon scripts and a direct link to the text file.
 - [recon-update](docs/recon-update.txt) - Update the recon scripts from GIT
-- [ctrecon](docs/ctrecon.txt) - Do recon on domain names, almost like AXFR
+- [recon-ct](docs/recon-ct.txt) - Do recon on domain names, almost like AXFR
+- [recon-ntoo](docs/recon-ntoo.txt) - Comming! Lookup danish phone number and get Operator
 
 
 
