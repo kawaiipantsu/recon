@@ -53,9 +53,10 @@ OCH CPS                 = The ID that OCH A/S has givien them in their database
 Operator ID             = Often it's just the CPS with a "0" removed from the start
 
 CPS format
- - 00xxx                = Service Operator with direct connection to OCH backend
- - 08xxx                = Service Operator with no connection to OCH backend
- - 010xx                = Network Operator (they have always direct connection to OCH)
+ - 00xxx                = Service Operator with direct connection to OCH backend (Active)
+ - 08xxx                = Service Operator with no connection to OCH backend (Passive)
+ - 09xxx                = Service Operator with no connection to OCH backend (Passive)
+ - 010xx                = Network Operator (They have always direct connection to OCH)
 
 ICC Length              = What length(s) of the SIM card number (ICC) is expected
 
