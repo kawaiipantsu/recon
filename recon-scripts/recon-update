@@ -12,7 +12,7 @@
 ### Get usefull stuff, i believe!
 SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
 UPDATE_CMD="git pull --quiet $SCRIPTPATH/../"
-
+CURRECT_DIR=`pwd`
 
 ### Fancy things
 echo "    ____  ____  _____ ____ ___  _   _   _   _           _       _        "
@@ -25,6 +25,7 @@ echo "-------------------------------------------------------------------------"
 echo ""
 
 ### Update the recon project
+cd $SCRIPTPATH/../
 if git checkout master --quiet && git fetch origin master --quiet && [ `git rev-list HEAD...origin/master --count` != 0 ] && git merge origin/master --quiet
 then
     echo "Found newer version of the KawaiiPantsu - Rec0n project"
@@ -36,3 +37,6 @@ else
 fi
 
 echo ""
+
+cd $CURRECT_DIR
+exit
